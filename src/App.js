@@ -5,6 +5,11 @@ import Drawing from './component/Drawing';
 import Tools from './component/Tools';
 
 class App extends Component {
+  constructor(props){
+    super(props);
+    
+  }
+
   render() {
     return (
       <div onContextMenu={e => e.preventDefault()}>

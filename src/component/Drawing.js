@@ -41,6 +41,7 @@ class Drawing extends Component {
         width={300}
         height={300}
         stroke="blue"
+        onDragMove={ true }
         onMouseDown={this.handleMouseDown}
         onMouseUp={this.handleMouseUp}
         onMouseMove={this.handleMouseMove}
