@@ -22,6 +22,7 @@ class Tools extends Component {
           <input type="button" value="Pencil" onClick={ () => { this.props.selectTool(toolConstant.PENCIL) } } />
           <input type="button" value="Eraser" onClick={ () => { this.props.selectTool(toolConstant.ERASER) } } />
         </div>
+        <div style={ {color: 'red'} }>*tool is change in redux</div>
       </div>
     );
   }

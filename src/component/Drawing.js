@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { toolConstant } from "../redux/constant";
+
 import { Image } from "react-konva";
 
 class Drawing extends Component {
@@ -28,20 +31,20 @@ class Drawing extends Component {
   handleMouseMove = ({ evt }) => {
     const { context, isDrawing } = this.state;
 
-//     console.log('evt', evt.buttons);
+    console.log('evt', evt.buttons);
 
+    
     if (isDrawing) {
       context.strokeStyle = "#df4b26";
       context.lineJoin = "round";
       context.lineWidth = 5;
 
-      if (evt.buttons === 1) {
-        // draw
+      if(this.props.tool === toolConstant.PENCIL){
         context.globalCompositeOperation = "source-over";
-      } else if (evt.buttons === 2) {
-        // erase
+      } else if(this.props.tool === toolConstant.ERASER){
         context.globalCompositeOperation = "destination-out";
       }
+      
       context.beginPath();
 
       var localPos = {
@@ -83,4 +86,8 @@ class Drawing extends Component {
   }
 }
 
-export default Drawing;
+const mapStateToProps = (state) => ({
+  tool : state.selectionTool,
+});
+
+export default connect(mapStateToProps)(Drawing);
