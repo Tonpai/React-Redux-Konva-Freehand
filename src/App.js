@@ -1,18 +1,23 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { Stage, Layer } from "react-konva";
+
+import Drawing from './component/Drawing';
+import Tools from './component/Tools';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div onContextMenu={e => e.preventDefault()}>
+        <div id='toolbox'>
+          <Tools/>
+        </div>
+        <div>
+          <Stage width={700} height={700}>
+            <Layer>
+              <Drawing />
+            </Layer>
+          </Stage>
+        </div>
       </div>
     );
   }
