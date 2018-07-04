@@ -23,6 +23,10 @@ class Tools extends Component {
           <input type="button" value="Eraser" onClick={ () => { this.props.selectTool(toolConstant.ERASER) } } />
         </div>
         <div style={ {color: 'red'} }>*tool is change in redux</div>
+        <div id="undo-redo">
+          <input type="button" value="Undo" />
+          <input type="button" value="Redo" />
+        </div>
       </div>
     );
   }

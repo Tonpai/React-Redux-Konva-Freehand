@@ -4,68 +4,91 @@ import { toolConstant } from "../redux/constant";
 
 import { Image } from "react-konva";
 
-class Drawing extends Component {
-  state = {
-    isDrawing: false,
-  };
+class Pencil {  
+  constructor(state){
+    this._state = state;
+  }
 
-  componentDidMount() {
+  componentDidMount(){
     const canvas = document.createElement("canvas");
     canvas.width = 300;
     canvas.height = 300;
     const context = canvas.getContext("2d");
 
-    this.setState({ canvas, context });
+    this._state.setState({ canvas, context });
   }
+  handleMouseDown(){
+    this._state.setState({ isDrawing: true });
+    const stage = this._state.image.getStage();
+    this._state.lastPointerPosition = stage.getPointerPosition();
+  }
+  handleMouseUp(){
+    this._state.setState({ isDrawing: false });
+  }
+  handleMouseMove(){
+    const { context, isDrawing } = this._state.state;
 
-  handleMouseDown = () => {
-    this.setState({ isDrawing: true });
-    const stage = this.image.getStage();
-    this.lastPointerPosition = stage.getPointerPosition();
-  };
-
-  handleMouseUp = () => {
-    this.setState({ isDrawing: false });
-  };
-
-  handleMouseMove = ({ evt }) => {
-    const { context, isDrawing } = this.state;
-
-    console.log('evt', evt.buttons);
-
-    
     if (isDrawing) {
       context.strokeStyle = "#df4b26";
       context.lineJoin = "round";
       context.lineWidth = 5;
 
-      if(this.props.tool === toolConstant.PENCIL){
+      if(this._state.props.tool === toolConstant.PENCIL){
         context.globalCompositeOperation = "source-over";
-      } else if(this.props.tool === toolConstant.ERASER){
+      } else if(this._state.props.tool === toolConstant.ERASER){
         context.globalCompositeOperation = "destination-out";
       }
-      
+
       context.beginPath();
 
       var localPos = {
-        x: this.lastPointerPosition.x - this.image.x(),
-        y: this.lastPointerPosition.y - this.image.y()
+        x: this._state.lastPointerPosition.x - this._state.image.x(),
+        y: this._state.lastPointerPosition.y - this._state.image.y()
       };
       context.moveTo(localPos.x, localPos.y);
 
-      const stage = this.image.getStage();
+      const stage = this._state.image.getStage();
 
       var pos = stage.getPointerPosition();
       localPos = {
-        x: pos.x - this.image.x(),
-        y: pos.y - this.image.y()
+        x: pos.x - this._state.image.x(),
+        y: pos.y - this._state.image.y()
       };
       context.lineTo(localPos.x, localPos.y);
       context.closePath();
       context.stroke();
-      this.lastPointerPosition = pos;
-      this.image.getLayer().draw();
+      this._state.lastPointerPosition = pos;
+      this._state.image.getLayer().draw();
     }
+  }
+}
+
+class Drawing extends Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      isDrawing: false,
+      canvas: null,
+      context: null,
+    };
+    this.tool = new Pencil(this);
+  }
+
+  componentDidMount() {
+    this.tool.componentDidMount();
+  }
+
+  handleMouseDown = () => {
+    this.tool.handleMouseDown();
+  };
+
+  handleMouseUp = () => {
+    this.tool.handleMouseUp();
+  };
+
+  handleMouseMove = () => {
+    this.tool.handleMouseMove();
   };
 
   render() {
