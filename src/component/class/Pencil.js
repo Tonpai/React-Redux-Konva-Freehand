@@ -1,5 +1,4 @@
 import Tool from './Tool';
-import { toolConstant } from "../../redux/constant";
 
 class Pencil extends Tool{
   constructor(state){
@@ -35,11 +34,7 @@ class Pencil extends Tool{
       context.lineJoin = "round";
       context.lineWidth = 5;
 
-      if(this._state.props.tool === toolConstant.PENCIL){
-        context.globalCompositeOperation = "source-over";
-      } else if(this._state.props.tool === toolConstant.ERASER){
-        context.globalCompositeOperation = "destination-out";
-      }
+      context.globalCompositeOperation = "source-over";
 
       context.beginPath();
 

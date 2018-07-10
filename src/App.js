@@ -32,15 +32,26 @@ class App extends Component {
 
   render() {
     return (
-      <div onContextMenu={ e => e.preventDefault() }>
+      <div 
+        // onContextMenu={ e => e.preventDefault() }
+      >
         <Toolbox toolbox={ this.state.toolbox } handleOnClick={ this.handleOnClickToolBox } />
         <div>
-          <Stage width={700} height={700}>
+          <Stage width={300} height={300}>
             <Layer>
               <Drawing {...this.state} />
             </Layer>
           </Stage>
         </div>
+        <div>
+          <Stage width={300} height={300}>
+            <Layer>
+              <Drawing {...this.state} />
+            </Layer>
+          </Stage>
+        </div>
+        <hr/>
+        
       </div>
     );
   }
