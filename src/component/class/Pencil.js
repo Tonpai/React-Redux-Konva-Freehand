@@ -1,7 +1,12 @@
-import { toolConstant } from "../redux/constant";
+import Tool from './Tool';
+import { toolConstant } from "../../redux/constant";
 
-class Pencil {  
+class Pencil extends Tool{
   constructor(state){
+    super("Pencil");
+    this._state = state;
+  }
+  setState(state){
     this._state = state;
   }
 
@@ -13,6 +18,7 @@ class Pencil {
 
     this._state.setState({ canvas, context });
   }
+
   handleMouseDown(){
     this._state.setState({ isDrawing: true });
     const stage = this._state.image.getStage();

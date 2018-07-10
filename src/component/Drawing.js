@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { Image } from "react-konva";
-import Pencil from './Pencil';
+import Pencil from './class/Pencil';
 
 class Drawing extends Component {
 
@@ -13,11 +13,30 @@ class Drawing extends Component {
       canvas: null,
       context: null,
     };
-    this.tool = new Pencil(this);
+    // this.tool = new Pencil(this);
   }
 
   componentDidMount() {
-    this.tool.componentDidMount();
+    const canvas = document.createElement("canvas");
+    canvas.width = 300;
+    canvas.height = 300;
+    const context = canvas.getContext("2d");
+
+    this.setState({ canvas, context });
+
+    const { toolbox, toolIndex } = this.props;
+
+    this.tool = toolbox[toolIndex];
+    this.tool.setState(this);
+    console.log(this.tool.getName());
+    // this.tool.componentDidMount();
+  }
+  componentDidUpdate(){
+    const { toolbox, toolIndex } = this.props;
+
+    this.tool = toolbox[toolIndex];
+    this.tool.setState(this);
+    console.log(this.tool.getName());
   }
 
   handleMouseDown = () => {

@@ -1,7 +1,12 @@
-import { toolConstant } from "../redux/constant";
+import Tool from './Tool';
 
-class Eraser {  
+class Eraser extends Tool{  
   constructor(state){
+    super("Eraser");
+    this._state = state;
+  }
+
+  setState(state){
     this._state = state;
   }
 
@@ -55,4 +60,4 @@ class Eraser {
   }
 }
 
-export default Pencil;
+export default Eraser;

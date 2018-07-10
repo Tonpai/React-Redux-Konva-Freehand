@@ -12,16 +12,24 @@ class Tools extends Component {
   }
 
   render(){
-    console.log(this.props);
+    const { toolbox, toolIndex, handleOnClick } = this.props;
+
     return(
       <div>
+        <div>
+          {
+            toolbox.map((tool, index) => (
+              <input data-key={ index } type="button" key={ index } value={ tool._name } onClick = { (e) => { handleOnClick(e) } } />
+            ))
+          }
+        </div>
         <div id="current-tools">
           tools : { this.props.tool }
         </div>
-        <div id="switch-tools-button">
+        {/* <div id="switch-tools-button">
           <input type="button" value="Pencil" onClick={ () => { this.props.selectTool(toolConstant.PENCIL) } } />
           <input type="button" value="Eraser" onClick={ () => { this.props.selectTool(toolConstant.ERASER) } } />
-        </div>
+        </div> */}
         <div style={ {color: 'red'} }>*tool is change in redux</div>
         <div id="undo-redo">
           <input type="button" value="Undo" />
